@@ -2,38 +2,38 @@ specVersion: 1.2.0
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum
-    name: OldBridge
-    network: mainnet
-    source:
-      address: "0xf6f09e56b96aa3c9a2cb2cb277eb523c72336120"
-      abi: OldBridge
-      startBlock: 12526508
-      # endBlock: 15447144
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.9
-      language: wasm/assemblyscript
-      entities:
-        - BridgeCallTriggered
-        - MessageDelivered
-      abis:
-        - name: OldBridge
-          file: ./abis/OldBridge.json
-      eventHandlers:
-        - event: BridgeCallTriggered(indexed address,indexed address,uint256,bytes)
-          handler: handleBridgeCallTriggered
-        - event: MessageDelivered(indexed uint256,indexed bytes32,address,uint8,address,bytes32)
-          handler: handleMessageDelivered
-      file: ./src/old-bridge.ts
+  # - kind: ethereum
+  #   name: OldBridge
+  #   network: mainnet
+  #   source:
+  #     address: "0xf6f09e56b96aa3c9a2cb2cb277eb523c72336120"
+  #     abi: OldBridge
+  #     startBlock: 15413149
+  #     # endBlock: 15447144
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.9
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - BridgeCallTriggered
+  #       - MessageDelivered
+  #     abis:
+  #       - name: OldBridge
+  #         file: ./abis/OldBridge.json
+  #     eventHandlers:
+  #       - event: BridgeCallTriggered(indexed address,indexed address,uint256,bytes)
+  #         handler: handleBridgeCallTriggered
+  #       - event: MessageDelivered(indexed uint256,indexed bytes32,address,uint8,address,bytes32)
+  #         handler: handleMessageDelivered
+  #     file: ./src/old-bridge.ts
   - kind: ethereum
     name: Inbox
     network: mainnet
     source:
-      address: "0x5aed5f8a1e3607476f1f81c3d8fe126deb0afe94"
+      address: "0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f"
       abi: Inbox
-      startBlock: 12526508
-      # endBlock: 15447144
+      startBlock: 12525700
+      endBlock: 15447144
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -42,6 +42,7 @@ dataSources:
         - InboxMessageDelivered
         - InboxMessageDeliveredFromOrigin
         - DepositEthCall
+        - DepositEthDeprecatedCall
         - BridgeTransfer
       abis:
         - name: Inbox
@@ -54,4 +55,6 @@ dataSources:
       callHandlers:
         - function: depositEth()
           handler: handleDepositETH
+        - function: depositEth(uint256)
+          handler: handleDepositETHDeprecated
       file: ./src/inbox.ts

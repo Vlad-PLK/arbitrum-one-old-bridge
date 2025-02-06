@@ -1,14 +1,3 @@
-type BridgeCallTriggered @entity(immutable: true) {
-  id: Bytes!
-  outbox: Bytes! # address
-  destAddr: Bytes! # address
-  amount: BigInt! # uint256
-  data: Bytes! # bytes
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 type MessageDelivered @entity(immutable: true) {
   id: Bytes!
   messageIndex: BigInt! # uint256
@@ -40,6 +29,13 @@ type InboxMessageDeliveredFromOrigin @entity(immutable: true) {
 }
 
 type DepositEthCall @entity(immutable: true) {
+  id: ID!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+  amount: BigInt!
+}
+
+type DepositEthDeprecatedCall @entity(immutable: true) {
   id: ID!
   blockNumber: BigInt!
   transactionHash: Bytes!

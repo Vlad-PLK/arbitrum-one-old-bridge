@@ -1,12 +1,8 @@
 {
   "mainnet": {
-    "OldBridge": {
-      "address": "0xf6f09e56b96aa3c9a2cb2cb277eb523c72336120",
-      "startBlock": 12526508
-    },
     "Inbox": {
       "address": "0x5aed5f8a1e3607476f1f81c3d8fe126deb0afe94",
-      "startBlock": 12526508
+      "startBlock": 12525700
     }
   }
 }
