@@ -1,0 +1,50 @@
+type BridgeCallTriggered @entity(immutable: true) {
+  id: Bytes!
+  outbox: Bytes! # address
+  destAddr: Bytes! # address
+  amount: BigInt! # uint256
+  data: Bytes! # bytes
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type InboxToggle @entity(immutable: true) {
+  id: Bytes!
+  inbox: Bytes! # address
+  enabled: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MessageDelivered @entity(immutable: true) {
+  id: Bytes!
+  messageIndex: BigInt! # uint256
+  beforeInboxAcc: Bytes! # bytes32
+  inbox: Bytes! # address
+  kind: Int! # uint8
+  sender: Bytes! # address
+  messageDataHash: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OutboxToggle @entity(immutable: true) {
+  id: Bytes!
+  outbox: Bytes! # address
+  enabled: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

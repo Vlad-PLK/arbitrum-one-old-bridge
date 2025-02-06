@@ -1,0 +1,38 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: OldBridge
+    network: mainnet
+    source:
+      address: "0xf6f09e56b96aa3c9a2cb2cb277eb523c72336120"
+      abi: OldBridge
+      startBlock: 15413149
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - BridgeCallTriggered
+        - InboxToggle
+        - MessageDelivered
+        - OutboxToggle
+        - OwnershipTransferred
+      abis:
+        - name: OldBridge
+          file: ./abis/OldBridge.json
+      eventHandlers:
+        - event: BridgeCallTriggered(indexed address,indexed address,uint256,bytes)
+          handler: handleBridgeCallTriggered
+        - event: InboxToggle(indexed address,bool)
+          handler: handleInboxToggle
+        - event: MessageDelivered(indexed uint256,indexed bytes32,address,uint8,address,bytes32)
+          handler: handleMessageDelivered
+        - event: OutboxToggle(indexed address,bool)
+          handler: handleOutboxToggle
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: ./src/old-bridge.ts
