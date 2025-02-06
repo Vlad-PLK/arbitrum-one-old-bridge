@@ -9,15 +9,6 @@ type BridgeCallTriggered @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type InboxToggle @entity(immutable: true) {
-  id: Bytes!
-  inbox: Bytes! # address
-  enabled: Boolean! # bool
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 type MessageDelivered @entity(immutable: true) {
   id: Bytes!
   messageIndex: BigInt! # uint256
@@ -31,20 +22,58 @@ type MessageDelivered @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type OutboxToggle @entity(immutable: true) {
+type InboxMessageDelivered @entity(immutable: true) {
   id: Bytes!
-  outbox: Bytes! # address
-  enabled: Boolean! # bool
+  messageNum: BigInt! # uint256
+  data: Bytes! # bytes
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type OwnershipTransferred @entity(immutable: true) {
+type InboxMessageDeliveredFromOrigin @entity(immutable: true) {
   id: Bytes!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
+  messageNum: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+}
+
+type DepositEthCall @entity(immutable: true) {
+  id: ID!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+  amount: BigInt!
+}
+
+type BridgeTransfer @entity(immutable: true) {
+  " event.transaction.hash.concatI32(event.logIndex) "
+  id: Bytes!
+
+  " Transaction hash of the transaction that emitted this event "
+  hash: Bytes!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Address that received the tokens "
+  to: Bytes!
+
+  " Address that sent the tokens "
+  from: Bytes!
+
+  " This is the address that's receiving the bridged funds (not a pool contract). When bridging out, it will be the address on the destination chain. "
+  transferTo: Bytes!
+
+  " This is the address initiating the transfer, where the initial funds came from. It might not match the address initiating the actual EVM transaction. "
+  transferFrom: Bytes
+
+  " Amount of token transferred "
+  amount: BigInt!
+
+  " Block number of this event "
+  blockNumber: BigInt!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
 }
